@@ -4,6 +4,7 @@ import main.java.model.entity.academic.Avaliacao;
 import main.java.model.entity.academic.Disciplina;
 import main.java.model.entity.character.*;
 import main.java.model.entity.world.*;
+import main.java.model.repository.QuestRepository;
 import main.java.model.service.AcademicoService;
 import main.java.model.service.ExplorarService;
 import main.java.model.service.QuestService;
@@ -67,13 +68,16 @@ public class ExplorarServiceTeste {
         colegiado      = new Colegiado("Colegiado", "Colegiado");
         pontoDeOnibus  = new PontoDeOnibus("Ponto", "Ponto de ônibus", "Linha 087");
 
-        profAlgoritmos = new Professor("Prof Algoritmos", salaAlgoritmos);
-        profExatas     = new Professor("Prof Exatas", salaExatas);
-        profHardware   = new Professor("Prof Hardware", leds);
-        cachorro       = new Animal("Scooby", cantina);
-        gato           = new Animal("Felícia", colegiado);
-        colega1        = new Colega("Colega1", pontoDeOnibus);
-        colega2        = new Colega("Colega2", leds);
+        ArrayList<String> falas = new ArrayList<>();
+        falas.add("Fala");
+
+        profAlgoritmos = new Professor("Prof Algoritmos", salaAlgoritmos, falas);
+        profExatas     = new Professor("Prof Exatas", salaExatas, falas);
+        profHardware   = new Professor("Prof Hardware", leds, falas);
+        cachorro       = new Animal("Scooby", cantina, falas);
+        gato           = new Animal("Felícia", colegiado, falas);
+        colega1        = new Colega("Colega1", pontoDeOnibus, falas);
+        colega2        = new Colega("Colega2", leds, falas);
 
         universidade = new Universidade("UEFS", "Universidade Estadual de Feira de Santana");
         universidade.getLocais().add(salaAlgoritmos);
@@ -91,7 +95,7 @@ public class ExplorarServiceTeste {
         universidade.getPersonagens().add(colega2);
 
         jogador = new Jogador("Nicolas", 100, 50, 50, 100, 50.0, 0.0, universidade);
-        QuestService qs = new QuestService();
+        QuestService qs = new QuestService(new QuestRepository());
         academicoService = new AcademicoService();
         explorarService = new ExplorarService(academicoService, qs);
     }

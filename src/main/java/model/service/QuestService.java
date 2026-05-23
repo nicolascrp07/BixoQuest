@@ -2,11 +2,18 @@ package main.java.model.service;
 
 import main.java.model.entity.character.Jogador;
 import main.java.model.entity.event.Quest;
+import main.java.model.entity.world.Universidade;
+import main.java.model.repository.QuestRepository;
 
 import java.util.ArrayList;
 
 // Service responsável pelas regras de negócio das quests
 public class QuestService {
+    QuestRepository qr;
+
+    public QuestService(QuestRepository qr){
+        this.qr = qr;
+    }
 
     // Inicia a quest para o jogador, desde que ele ainda não a tenha ativa
     public void aceitarQuest(Jogador j, Quest q) {
@@ -32,5 +39,11 @@ public class QuestService {
             q.getRecompensa().aplicar(j);
             j.getQuestsAtivas().remove(q);
         }
+    }
+
+    public void gerarQuest(Jogador j){
+        ArrayList<Quest> quests = qr.buscarTodas();
+        int indice = (int) (Math.random() * quests.size());
+        this.aceitarQuest(j, quests.get(indice));
     }
 }

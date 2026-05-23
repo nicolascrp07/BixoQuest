@@ -4,12 +4,14 @@ import main.java.model.entity.world.LEDS;
 import main.java.model.entity.world.Local;
 import main.java.model.entity.world.Sala;
 
+import java.util.ArrayList;
+
 // Professor do jogo
 public class Professor extends Personagem {
 
     // Constrói o professor
-    public Professor(String nome, Local local) {
-        super(nome, local);
+    public Professor(String nome, Local local, ArrayList<String> dialogos) {
+        super(nome, local, dialogos);
     }
 
     // Professores só podem acessar salas de aula e o LEDS

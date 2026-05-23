@@ -9,6 +9,7 @@ import main.java.model.entity.world.Universidade;
 import main.java.model.repository.*;
 
 import java.util.ArrayList;
+import java.util.UUID;
 
 // Service central da partida, responsável pelo fluxo principal do jogo
 public class PartidaService {
@@ -21,13 +22,13 @@ public class PartidaService {
     private UniversidadeRepository uniRepo;
     private PartidaRepository partRepo;
     private EventoRepository eventoRepo;
+    private QuestRepository questRepo;
 
     // Total de disciplinas necessárias para vencer o jogo
     public static final int TOTAL_DISCIPLINAS = 24;
 
     // Constrói o service
-    public PartidaService(AcademicoService ac, ExplorarService es, EventoService ev, ProfessorRepository pr,
-                          DisciplinaRepository dr, UniversidadeRepository ur, PartidaRepository par, EventoRepository er) {
+    public PartidaService(AcademicoService ac, ExplorarService es, EventoService ev, ProfessorRepository pr, DisciplinaRepository dr, UniversidadeRepository ur, PartidaRepository par, EventoRepository er, QuestRepository qr) {
         this.academicoService = ac;
         this.explorarService  = es;
         this.eventoService    = ev;
@@ -36,6 +37,7 @@ public class PartidaService {
         this.uniRepo          = ur;
         this.partRepo         = par;
         this.eventoRepo       = er;
+        this.questRepo        = qr;
     }
 
     // Avança uma semana, reposiciona personagens, gera evento e, se virar semestre, fecha e rematricula
@@ -50,6 +52,8 @@ public class PartidaService {
             explorarService.atualizarSalas(aprovadas, p.getUniversidade(), p.getGradeCompleta());
             academicoService.matricularNovoSemestre(p.getJogador(), p.getGradeCompleta());
         }
+
+        partRepo.salvarPartida(p);
     }
 
     // Retorna true se o jogador concluiu todas as disciplinas da grade
@@ -67,20 +71,36 @@ public class PartidaService {
         ArrayList<Disciplina> grade   = discRepo.buscarTodas();
         Universidade uni              = uniRepo.buscarPorNome("UEFS");
         ArrayList<Evento> eventos     = eventoRepo.buscarTodos();
+        questRepo.criarQuestsPadrao(uni);
 
         // Cria o jogador com os atributos iniciais e o posiciona na universidade
         Jogador jogador = new Jogador(nomeJogador, 100, 0, 100, 100, 50.0, 0.0, uni);
         academicoService.matricularNovoSemestre(jogador, grade);
 
         Tempo tempo     = new Tempo(1, 1);
-        Partida partida = new Partida(jogador, tempo, uni, null, false, eventos, grade);
+        Partida partida = new Partida(jogador, tempo, uni, null, false, eventos, grade, UUID.randomUUID());
 
         partRepo.salvarPartida(partida);
         return partida;
+    }
+
+    public ArrayList<Partida> carregarJogo() {
+        profRepo.criarProfessores();
+        discRepo.criarGrade(profRepo.buscarTodos());
+        uniRepo.criarMundo(discRepo.buscarTodas());
+        eventoRepo.criarEventosPadrao();
+        Universidade uni = uniRepo.buscarPorNome("UEFS");
+        questRepo.criarQuestsPadrao(uni);
+        return partRepo.buscarJogosSalvos(uni);
     }
 
     // Retorna true se o jogador ficou sem saúde ou sem motivação
     public boolean verificarGameOver(Jogador j) {
         return j.getSaude() == 0 || j.getMotivacao() == 0;
     }
+
+    public void deletarJogoFinalizado(Partida partida) {
+        partRepo.deletarSave(partida);
+    }
+
 }

@@ -10,13 +10,13 @@ public abstract class Personagem {
 
     protected String nome;                          // Nome do personagem
     protected Local local;                          // Local onde o personagem se encontra
-    protected ArrayList<Quest> questsDisponiveis;   // Quests que este personagem pode oferecer
+    protected ArrayList<String> dialogos;
 
     // Constrói o personagem
-    public Personagem(String nome, Local local) {
+    public Personagem(String nome, Local local, ArrayList<String> dialogos) {
         this.nome = nome;
         this.local = local;
-        this.questsDisponiveis = new ArrayList<>();
+        this.dialogos = dialogos;
     }
 
     // Atualiza o local do personagem
@@ -26,7 +26,10 @@ public abstract class Personagem {
     public Local getLocalAtual() { return local; }
 
     // Retorna o diálogo
-    public String getDialogo(String d) { return d; }
+    public String getDialogo() {
+        int indice = (int) (Math.random() * dialogos.size());
+        return dialogos.get(indice);
+    }
 
     // Retorna o nome do personagem
     public String getNome() { return nome; }

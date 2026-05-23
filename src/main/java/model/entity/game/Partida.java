@@ -5,6 +5,7 @@ import main.java.model.entity.character.Jogador;
 import main.java.model.entity.world.Universidade;
 import main.java.model.entity.event.Evento;
 import java.util.ArrayList;
+import java.util.UUID;
 
 // Partida em andamento
 public class Partida {
@@ -16,9 +17,10 @@ public class Partida {
     private boolean jogoEncerrado;              // Indica se a partida chegou ao fim
     private ArrayList<Evento> eventos;          // Lista de todos os eventos disponíveis na partida
     private ArrayList<Disciplina> gradeCompleta; // Grade curricular completa do curso
+    private UUID id;
 
     // Constrói a partida
-    public Partida(Jogador jogador, Tempo tempo, Universidade universidade, Evento eventoAtual, boolean jogoEncerrado, ArrayList<Evento> eventos, ArrayList<Disciplina> gradeCompleta) {
+    public Partida(Jogador jogador, Tempo tempo, Universidade universidade, Evento eventoAtual, boolean jogoEncerrado, ArrayList<Evento> eventos, ArrayList<Disciplina> gradeCompleta, UUID id) {
         this.jogador = jogador;
         this.tempo = tempo;
         this.universidade = universidade;
@@ -26,6 +28,7 @@ public class Partida {
         this.jogoEncerrado = jogoEncerrado;
         this.eventos = eventos;
         this.gradeCompleta = gradeCompleta;
+        this.id = id;
     }
 
     // Retorna o jogador
@@ -54,4 +57,7 @@ public class Partida {
 
     // Retorna todos os eventos
     public ArrayList<Evento> getEventos() { return eventos; }
+
+    // Retorna a identificação do arquivo na persistência
+    public UUID getId (){ return id; }
 }

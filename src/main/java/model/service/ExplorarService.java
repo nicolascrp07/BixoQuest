@@ -45,6 +45,16 @@ public class ExplorarService {
         }
     }
 
+    public String dialogoNPC(Jogador j, Personagem npc, Universidade uni) {
+        if (j.getLocalAtual() == npc.getLocalAtual()){
+            if (j.getQuestsAtivas().isEmpty()) {
+                questService.gerarQuest(j);
+            }
+            return npc.getDialogo();
+        }
+        return "";
+    }
+
     // Atualiza as disciplinas das salas e do LEDS após o fechamento de semestre
     public void atualizarSalas(ArrayList<Disciplina> aprovadas, Universidade uni, ArrayList<Disciplina> grade) {
         for (Disciplina aprovada : aprovadas) {

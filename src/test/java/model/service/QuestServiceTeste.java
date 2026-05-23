@@ -6,6 +6,7 @@ import main.java.model.entity.event.QuestVisita;
 import main.java.model.entity.event.Recompensa;
 import main.java.model.entity.world.Colegiado;
 import main.java.model.entity.world.Universidade;
+import main.java.model.repository.QuestRepository;
 import main.java.model.service.QuestService;
 import org.junit.Before;
 import org.junit.Test;
@@ -23,7 +24,7 @@ public class QuestServiceTeste {
     // Constrói o sistema de teste das quests antes de cada teste
     @Before
     public void setUp(){
-        questService = new QuestService();
+        questService = new QuestService(new QuestRepository());
         recompensa = new Recompensa(15.0, 10, 5);
         questAtributo = new QuestAtributo("Alcançar 60 em Nível de Conhecimento", null, "De cara nos livros! Alcance 60 em conhecimento!", recompensa, QuestAtributo.CONHECIMENTO, 60);
         questVisita = new QuestVisita("Visite a cantina", null, "Que larica! Vá até a cantina e confira o cardápio.", recompensa, new Colegiado("Colegiado Teste", "Instância do Colegiado"));

@@ -4,12 +4,14 @@ import main.java.model.entity.world.LEDS;
 import main.java.model.entity.world.Local;
 import main.java.model.entity.world.Sala;
 
+import java.util.ArrayList;
+
 // Animal presente no mundo do jogo
 public class Animal extends Personagem {
 
     // Constrói o animal
-    public Animal(String nome, Local local) {
-        super(nome, local);
+    public Animal(String nome, Local local, ArrayList<String> dialogos) {
+        super(nome, local, dialogos);
     }
 
     // Animais não podem acessar salas de aula nem o LEDS

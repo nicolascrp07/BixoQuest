@@ -4,12 +4,14 @@ import main.java.model.entity.world.LEDS;
 import main.java.model.entity.world.Local;
 import main.java.model.entity.world.Sala;
 
+import java.util.ArrayList;
+
 // Colega de curso
 public class Colega extends Personagem {
 
     // Constrói o colega
-    public Colega(String nome, Local local) {
-        super(nome, local);
+    public Colega(String nome, Local local, ArrayList<String> dialogos) {
+        super(nome, local, dialogos);
     }
 
     // Colegas podem circular livremente por qualquer local do jogo
