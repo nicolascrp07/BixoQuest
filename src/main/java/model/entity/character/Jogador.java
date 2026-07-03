@@ -20,6 +20,8 @@ public class Jogador {
     private ArrayList<Disciplina> historicoAprovadas; // Disciplinas aprovadas
     private ArrayList<Quest> questsAtivas;          // Quests em andamento
     private Local localAtual;                       // Local onde o jogador se encontra
+    private String caminhoAvatar;                   // Imagem de corpo inteiro para os mapas
+    private String caminhoIconeAvatar;              // Imagem para o HUD
 
     // Constrói o jogador com todos os atributos iniciais da partida
     public Jogador(String n, int e, int nc, int m, int s, double d, double da, Local l) {
@@ -40,27 +42,21 @@ public class Jogador {
     public void setNome(String nome) { this.nome = nome; }
 
     public int getEnergia() { return energia; }
-    // Mantém a energia dentro dos limites permitidos
     public void setEnergia(int energia) { this.energia = Math.clamp(energia, 0, 100); }
 
     public int getNivelConhecimento() { return nivelConhecimento; }
-    // Mantém o conhecimento dentro dos limites permitidos
     public void setNivelConhecimento(int nivelConhecimento) { this.nivelConhecimento = Math.clamp(nivelConhecimento, 0, 100); }
 
     public int getMotivacao() { return motivacao; }
-    // Mantém a motivação dentro dos limites permitidos
     public void setMotivacao(int motivacao) { this.motivacao = Math.clamp(motivacao, 0, 100); }
 
     public int getSaude() { return saude; }
-    // Mantém a saúde dentro dos limites permitidos
     public void setSaude(int saude) { this.saude = Math.clamp(saude, 0, 100); }
 
     public double getDinheiro() { return dinheiro; }
-    // Garante que o saldo nunca fique negativo
     public void setDinheiro(double dinheiro) { this.dinheiro = Math.max(0.0, dinheiro); }
 
     public double getDesempenhoAcademico() { return desempenhoAcademico; }
-    // Mantém o desempenho acadêmico dentro dos limites permitidos
     public void setDesempenhoAcademico(double desempenhoAcademico) { this.desempenhoAcademico = Math.clamp(desempenhoAcademico, 0, 10); }
 
     public ArrayList<Disciplina> getDisciplinas() { return disciplinas; }
@@ -75,15 +71,14 @@ public class Jogador {
     public Local getLocalAtual() { return localAtual; }
     public void setLocalAtual(Local localAtual) { this.localAtual = localAtual; }
 
-    // Adiciona uma nova quest à lista de quests ativas
+    public String getCaminhoAvatar() { return caminhoAvatar; }
+    public void setCaminhoAvatar(String caminhoAvatar) { this.caminhoAvatar = caminhoAvatar; }
+
+    public String getCaminhoIconeAvatar() { return caminhoIconeAvatar; }
+    public void setCaminhoIconeAvatar(String caminhoIconeAvatar) { this.caminhoIconeAvatar = caminhoIconeAvatar; }
+
     public void addQuest(Quest quest) { this.questsAtivas.add(quest); }
-
-    // Matricula o jogador em uma nova disciplina
     public void addDisciplina(Disciplina disciplina) { this.disciplinas.add(disciplina); }
-
-    // Remove uma disciplina da grade atual do jogador
     public void removeDisciplina(Disciplina disciplina) { this.disciplinas.remove(disciplina); }
-
-    // Registra uma disciplina aprovada no histórico do jogador
     public void addDisciplinaHistorico(Disciplina disciplina) { this.historicoAprovadas.add(disciplina); }
 }

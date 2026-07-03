@@ -41,33 +41,54 @@ public class ProfessorRepository {
     // Instancia e salva todos os professores do jogo
     public void criarProfessores() {
 
-        // Instancia a lista de falas dos professores no modo clássico
-        ArrayList<String> falas = new ArrayList<>();
-        falas.add("Vocês já leram o problema dessa semana? O tutorial não se resolve sozinho e a fase 1 já está no fim!");
-        falas.add("Lembrem-se: a arquitetura MVC não é uma sugestão carinhosa, é um requisito básico para a manutenibilidade do seu software.");
-        falas.add("O código compila, mas não faz o que o edital pede. Engenharia não é tentativa e erro, é planejamento.");
-        falas.add("Quem implementou essa persistência de dados em arquivos .txt sem tratar as exceções de I/O? Zero para a dupla.");
-        falas.add("Ponteiros em C são como a vida universitária: um passo em falso apontando para o lugar errado e você tem um 'Segmentation Fault'.");
-        falas.add("A prova surpresa de hoje vai separar os algoritmos otimizados dos laços infinitos. Guardem os celulares.");
-        falas.add("Muito bem, a lógica desse Service está coesa. Mas cadê a cobertura de testes de unidade dessa classe?");
-        falas.add("Não deixem para escrever o relatório do formato SBC no domingo à noite. A formatação vai devorar a alma de vocês.");
+        if (!pb.isEmpty()) return;
 
-        // Professoras de Algoritmos
-        this.salvar(new Professor("Claudênia Plinda",            null, falas));
-        this.salvar(new Professor("Pamelinda Cortizona",         null, falas));
-        this.salvar(new Professor("Biancarlota Santalinda",      null, falas));
-        this.salvar(new Professor("Gabriela Peixolinda",         null, falas));
+        // Falas para Professores de Algoritmos
+        ArrayList<String> falasAlgoritmos = new ArrayList<>();
+        falasAlgoritmos.add("Vocês já leram o problema dessa semana? O tutorial não se resolve sozinho e a fase 1 já está no fim!");
+        falasAlgoritmos.add("Lembrem-se: a arquitetura MVC não é uma sugestão carinhosa, é um requisito básico para a manutenibilidade.");
+        falasAlgoritmos.add("O código compila, mas não faz o que o edital pede. Engenharia não é tentativa e erro, é planejamento.");
+        falasAlgoritmos.add("Quem implementou essa persistência de dados em arquivos sem tratar as exceções? Zero para a dupla.");
+        falasAlgoritmos.add("Ponteiros em C são como a vida universitária: um passo em falso para o lugar errado e você tem um 'Segmentation Fault'.");
+        falasAlgoritmos.add("Muito bem, a lógica desse Service está coesa. Mas cadê a cobertura de testes de unidade dessa classe?");
+        falasAlgoritmos.add("Não deixem para escrever o relatório do formato SBC no domingo à noite. A formatação vai devorar a alma de vocês.");
+
+        // Falas para Professores de Hardware
+        ArrayList<String> falasHardware = new ArrayList<>();
+        falasHardware.add("Vocês acham que a CPU faz mágica? Tudo se resume a transistores e portas lógicas. Revisem o mapa de Karnaugh!");
+        falasHardware.add("Se vocês ligarem o VCC no GND novamente na protoboard, eu vou reprovar a bancada inteira por tentativa de incêndio!");
+        falasHardware.add("A arquitetura de Von Neumann não vai perdoar esse gargalo de memória que vocês criaram nesse projeto.");
+        falasHardware.add("Lembrem-se do Teorema de Nyquist! Não adianta amostrar o sinal de qualquer jeito e esperar que o áudio não fique distorcido.");
+        falasHardware.add("O osciloscópio não mente. Se a onda está quadrada quando deveria ser senoidal, o seu circuito está chorando.");
+        falasHardware.add("Cuidado com a estática. Uma mão desavisada e aquele CI que custou caro vai direto pro lixo.");
+        falasHardware.add("Alguém mediu a corrente antes de ligar a fonte? O cheiro de componente queimado me diz que não...");
+
+        // Falas para Professores de Exatas
+        ArrayList<String> falasExatas = new ArrayList<>();
+        falasExatas.add("A prova surpresa de hoje vai separar os que sabem integrar por partes dos que choram no limite.");
+        falasExatas.add("Se o determinante dessa matriz der zero, o sistema não tem solução única, e a esperança de vocês também não.");
+        falasExatas.add("Lógica proposicional é a base de tudo. Se (A e B) é falso, pelo amor de De Morgan, revisem a tabela verdade!");
+        falasExatas.add("Na probabilidade, a chance de vocês passarem sem estudar é um evento mutuamente excludente com a realidade.");
+        falasExatas.add("Quero ver quem consegue resolver essa Equação Diferencial de segunda ordem homogênea sem olhar no apêndice do livro.");
+        falasExatas.add("Não esqueçam a constante 'C' no final da integral indefinida, ou eu vou descontar meio ponto de cada um!");
+        falasExatas.add("Isso é geometria analítica básica! O produto vetorial não comuta, parem de inverter o sinal!");
+
+        // Professores de Algoritmos
+        this.salvar(new Professor("Claudênia Plinda",            null, falasAlgoritmos));
+        this.salvar(new Professor("Pamelinda Cortizona",         null, falasAlgoritmos));
+        this.salvar(new Professor("Biancarlota Santalinda",      null, falasAlgoritmos));
+        this.salvar(new Professor("Gabriela Peixolinda",         null, falasAlgoritmos));
 
         // Professores de Hardware
-        this.salvar(new Professor("Anfransérgio Diastronho",     null, falas));
-        this.salvar(new Professor("Joãoberto Boscolino",         null, falas));
-        this.salvar(new Professor("Delmarvilho Brogliovski",     null, falas));
-        this.salvar(new Professor("Ângelo Duartênis",            null, falas));
+        this.salvar(new Professor("Anfransérgio Diastronho",     null, falasHardware));
+        this.salvar(new Professor("Joãoberto Boscolino",         null, falasHardware));
+        this.salvar(new Professor("Delmarvilho Brogliovski",     null, falasHardware));
+        this.salvar(new Professor("Ângelo Duartênis",            null, falasHardware));
 
         // Professores de Exatas
-        this.salvar(new Professor("Jaquelândia Sintrônica",      null, falas));
-        this.salvar(new Professor("Geraldoncio Assislânio",      null, falas));
-        this.salvar(new Professor("Cristianópolis Mascarenhudo", null, falas));
-        this.salvar(new Professor("Ademaksonildo Araujástico",   null, falas));
+        this.salvar(new Professor("Jaquelândia Sintrônica",      null, falasExatas));
+        this.salvar(new Professor("Geraldoncio Assislânio",      null, falasExatas));
+        this.salvar(new Professor("Cristianópolis Mascarenhudo", null, falasExatas));
+        this.salvar(new Professor("Ademaksonildo Araujástico",   null, falasExatas));
     }
 }

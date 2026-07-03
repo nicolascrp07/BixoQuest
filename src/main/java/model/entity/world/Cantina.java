@@ -1,6 +1,8 @@
 package main.java.model.entity.world;
 
 import main.java.model.entity.character.Jogador;
+import main.java.model.exception.SaldoInsuficienteException;
+
 import java.util.ArrayList;
 
 // Cantina da universidade
@@ -18,15 +20,17 @@ public class Cantina extends Local {
         this.valorLanche = valorLanche;
     }
 
-    // Desconta o valor do lanche e aumenta a motivação do jogador
-    private void comprarLanche(Jogador jogador) {
-        jogador.setDinheiro(jogador.getDinheiro() - valorLanche);
-        jogador.setMotivacao(jogador.getMotivacao() + 15);
+    private void comprarLanche(Jogador jogador) throws SaldoInsuficienteException {
+        if (jogador.getDinheiro() >= valorLanche) {
+            jogador.setDinheiro(jogador.getDinheiro() - valorLanche);
+            jogador.setMotivacao(jogador.getMotivacao() + 15);
+        } else {
+            throw new SaldoInsuficienteException("Você não tem dinheiro para esse lanche!");
+        }
     }
 
-    // A ação específica da cantina é vender um lanche
     @Override
-    public void acaoEspecifica(Jogador j) {
+    public void acaoEspecifica(Jogador j) throws SaldoInsuficienteException {
         this.comprarLanche(j);
     }
 }

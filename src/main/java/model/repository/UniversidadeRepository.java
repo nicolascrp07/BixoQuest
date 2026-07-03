@@ -13,12 +13,10 @@ public class UniversidadeRepository {
     private ArrayList<Universidade> ub = new ArrayList<>(); // Base de dados das universidades
 
     // Salva a universidade se ela ainda não estiver cadastrada | Retorna null caso contrário
-    public Universidade salvar(Universidade uni) {
+    public void salvar(Universidade uni) {
         if (!ub.contains(uni)) {
             ub.add(uni);
-            return uni;
         }
-        return null;
     }
 
     // Retorna uma cópia da lista com todas as universidades cadastradas
@@ -54,13 +52,15 @@ public class UniversidadeRepository {
         dialogosColegas.add("Alguém tem cabo de celular para emprestar? Minha bateria está em 2% e eu preciso ver o PDF do tutorial.");
         dialogosColegas.add("Caiu exatamente a questão que a gente estudou no laboratório ontem! Acho que finalmente presenciei um milagre acadêmico!");
 
-        ArrayList<String> dialogosAnimais = new ArrayList<>();
-        dialogosAnimais.add("*Au au!* (O doguinho abana o rabo, feliz por não ter prazos de relatórios para cumprir)");
-        dialogosAnimais.add("*Miau...* (A gatinha roça nas suas pernas, sugando todo o estresse do seu pré-prova)");
-        dialogosAnimais.add("(O cachorro caramelo do campus te olha com uma profunda e inabalável sabedoria acadêmica)");
-        dialogosAnimais.add("*Prrr...* (O gatinho ronrona no seu colo. Por um momento, você esquece da sua nota de Cálculo II)");
-        dialogosAnimais.add("*Woof!* (O doguinho fareja a sua mochila em busca daquele salgado que você comprou na cantina)");
-        dialogosAnimais.add("(O gato pisca lentamente para você, te julgando em silêncio por não ter feito os testes de unidade)");
+        ArrayList<String> dialogosScooby = new ArrayList<>();
+        dialogosScooby.add("*Au au!* (O doguinho abana o rabo, feliz por não ter prazos de relatórios para cumprir)");
+        dialogosScooby.add("(O cachorro caramelo do campus te olha com uma profunda e inabalável sabedoria acadêmica)");
+        dialogosScooby.add("*Woof!* (O doguinho fareja a sua mochila em busca daquele salgado que você comprou na cantina)");
+
+        ArrayList<String> dialogosFelicia = new ArrayList<>();
+        dialogosFelicia.add("*Miau...* (A gatinha roça nas suas pernas, sugando todo o estresse do seu pré-prova)");
+        dialogosFelicia.add("*Prrr...* (A gatinha ronrona no seu colo. Por um momento, você esquece da sua nota de Cálculo)");
+        dialogosFelicia.add("(O gato pisca lentamente para você, te julgando em silêncio por não ter feito os testes de unidade)");
 
         Sala salaAlgoritmos = new Sala("Sala de Algoritmos", "Sala de aula de programação", grade.get(8));
         Sala salaExatas     = new Sala("Sala de Exatas",     "Sala de aula de matemática",  grade.get(0));
@@ -68,29 +68,64 @@ public class UniversidadeRepository {
         Cantina cantina     = new Cantina("Cantina",         "Cantina universitária",        new ArrayList<>(), 0, 15.0);
         PontoDeOnibus ponto = new PontoDeOnibus("Ponto de Ônibus", "Ponto de ônibus do campus", "Linha 1");
         Colegiado colegiado = new Colegiado("Colegiado",     "Colegiado do curso");
-
-        Animal gato      = new Animal("Felícia",          colegiado, dialogosAnimais);
-        Animal cachorro  = new Animal("Scooby",           cantina,   dialogosAnimais);
-        Colega colega1   = new Colega("Ying Marros",      ponto,     dialogosColegas);
-        Colega colega2   = new Colega("Ouriçangro Sales", salaAlgoritmos, dialogosColegas);
+        Modulo modulo3 = new Modulo("Módulo 3", "Prédio principal com as salas teóricas.");
+        Modulo modulo5 = new Modulo("Módulo 5", "Prédio focado nos laboratórios práticos.");
+        Modulo moduloAuxiliar = new Modulo("Módulo Auxiliar", "Prédio intermediário.");
+        Modulo mapaPrincipal = new Modulo("Mapa Principal", "Módulo que reúne os demais no início do jogo.");
 
         Universidade uni = new Universidade("UEFS", "Universidade Estadual de Feira de Santana");
+
+        uni.addConexao(mapaPrincipal);  mapaPrincipal.addConexao(uni);
+        uni.addConexao(modulo3);     modulo3.addConexao(uni);
+        uni.addConexao(modulo5);     modulo5.addConexao(uni);
+        uni.addConexao(cantina);     cantina.addConexao(uni);
+        uni.addConexao(colegiado);   colegiado.addConexao(uni);
+        uni.addConexao(ponto);       ponto.addConexao(uni);
+        uni.addConexao(moduloAuxiliar); moduloAuxiliar.addConexao(uni);
+        uni.addConexao(salaAlgoritmos); salaAlgoritmos.addConexao(uni);
+        uni.addConexao(salaExatas);     salaExatas.addConexao(uni);
+        uni.addConexao(leds);           leds.addConexao(uni);
+
+
+        mapaPrincipal.addConexao(modulo3);          modulo3.addConexao(mapaPrincipal);
+        mapaPrincipal.addConexao(modulo5);          modulo5.addConexao(mapaPrincipal);
+        mapaPrincipal.addConexao(moduloAuxiliar);   moduloAuxiliar.addConexao(mapaPrincipal);
+        mapaPrincipal.addConexao(mapaPrincipal);
+
+        modulo5.addConexao(salaAlgoritmos);   salaAlgoritmos.addConexao(modulo5);
+        modulo5.addConexao(salaExatas);       salaExatas.addConexao(modulo5);
+
+        modulo3.addConexao(colegiado);        colegiado.addConexao(modulo3);
+        modulo3.addConexao(leds);             leds.addConexao(modulo3);
+
+        moduloAuxiliar.addConexao(cantina);   cantina.addConexao(moduloAuxiliar);
+        moduloAuxiliar.addConexao(ponto);     ponto.addConexao(moduloAuxiliar);
+
+        uni.getLocais().add(mapaPrincipal);
         uni.getLocais().add(salaAlgoritmos);
         uni.getLocais().add(salaExatas);
         uni.getLocais().add(leds);
         uni.getLocais().add(cantina);
         uni.getLocais().add(colegiado);
         uni.getLocais().add(ponto);
+        uni.getLocais().add(modulo3);
+        uni.getLocais().add(modulo5);
+        uni.getLocais().add(moduloAuxiliar);
 
+        // Distribuição de Professores
         for (Disciplina d : grade) {
-            if (d.getArea().equals(DisciplinaRepository.ALGORITMOS)) {
-                d.getProfessor().setLocal(salaAlgoritmos);
-            } else if (d.getArea().equals(DisciplinaRepository.HARDWARE)) {
-                d.getProfessor().setLocal(leds);
-            } else if (d.getArea().equals(DisciplinaRepository.EXATAS)) {
-                d.getProfessor().setLocal(salaExatas);
+            switch (d.getArea()) {
+                case DisciplinaRepository.ALGORITMOS -> d.getProfessor().setLocal(salaAlgoritmos);
+                case DisciplinaRepository.HARDWARE -> d.getProfessor().setLocal(leds);
+                case DisciplinaRepository.EXATAS -> d.getProfessor().setLocal(salaExatas);
             }
         }
+
+        // Instanciação e Distribuição dos NPCs
+        Animal gato      = new Animal("Felícia",          colegiado, dialogosFelicia);
+        Animal cachorro  = new Animal("Scooby",           cantina,   dialogosScooby);
+        Colega colega1   = new Colega("Arthur",      ponto,     dialogosColegas);
+        Colega colega2   = new Colega("Bella", salaAlgoritmos, dialogosColegas);
 
         uni.getPersonagens().add(gato);
         uni.getPersonagens().add(cachorro);

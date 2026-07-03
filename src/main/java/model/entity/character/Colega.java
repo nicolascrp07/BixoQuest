@@ -1,8 +1,6 @@
 package main.java.model.entity.character;
 
-import main.java.model.entity.world.LEDS;
 import main.java.model.entity.world.Local;
-import main.java.model.entity.world.Sala;
 
 import java.util.ArrayList;
 
@@ -29,5 +27,11 @@ public class Colega extends Personagem {
     @Override
     public void interacaoEspecifica(Jogador jogador) {
         this.fofocaAlheia(jogador);
+    }
+
+    // Define se o colega se move aleatoriamente pelo mapa
+    @Override
+    public boolean seMoveAleatoriamente(){
+        return true;
     }
 }

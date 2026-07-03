@@ -1,6 +1,8 @@
 package main.java.model.entity.event;
 
 import main.java.model.entity.game.Tempo;
+import main.java.model.entity.world.Local;
+
 import java.util.ArrayList;
 
 // Classe abstrata para todos os eventos que podem ocorrer durante a partida
@@ -23,11 +25,14 @@ public abstract class Evento {
     public double getProbabilidadeOcorrencia() { return probabilidadeOcorrencia; }
 
     // Retorna as escolhas disponíveis
-    public ArrayList<Escolha> getEscolhas() { return escolhas; }
+    public ArrayList<Escolha> getEscolhas() { return new ArrayList<>(this.escolhas); }
 
     // Define a condição de ocorrerência
-    public abstract boolean condicaoOcorrencia(Tempo tempo);
+    public abstract boolean condicaoOcorrencia(Tempo tempo, Local local);
 
-    // Decide se o evento ocorre
-    public abstract boolean podeOcorrer(Tempo tempo);
+    // Retorna a descrição do evento
+    public String getDescricao() { return this.descricao; }
+
+    // Retorna o noem do evento
+    public String getNome() { return this.nome;}
 }

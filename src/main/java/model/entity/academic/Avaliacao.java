@@ -1,8 +1,5 @@
 package main.java.model.entity.academic;
 
-import main.java.model.entity.event.Consequencia;
-import main.java.model.entity.character.Jogador;
-
 // Avaliação acadêmica do jogo, com nome, dificuldade e nota
 public class Avaliacao {
 

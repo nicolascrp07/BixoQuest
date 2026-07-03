@@ -48,6 +48,8 @@ public class DisciplinaRepository {
     // Cria e salva toda a grade curricular do curso
     public void criarGrade(ArrayList<Professor> professores) {
 
+        if (!db.isEmpty()) return;
+
         // Disciplinas de Exatas
         Disciplina preCalculo  = new Disciplina("Pré-Cálculo",                            EXATAS,     professores.get(8),  null,        0.0, 60, false, new Avaliacao("Avaliação Pré-Cálculo",                  0, 0.0));
         Disciplina calc1       = new Disciplina("Cálculo I",                               EXATAS,     professores.get(8),  preCalculo,  0.0, 60, false, new Avaliacao("Avaliação Cálculo I",                    0, 0.0));

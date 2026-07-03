@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.Pane?>
+
+<Pane prefHeight="600.0" prefWidth="800.0" stylesheets="@../css/geral.css" xmlns="http://javafx.com/javafx/26" xmlns:fx="http://javafx.com/fxml/1" fx:controller="main.java.view.controller.MapaModuloAuxiliarController">
+   <children>
+      <ImageView fitHeight="600.0" fitWidth="800.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@../imagens/MAPAMODULOAUXILIAR.jpeg" />
+         </image>
+      </ImageView>
+      <Button layoutX="4.0" layoutY="96.0" mnemonicParsing="false" onAction="#irParaCantina" opacity="0.0" prefHeight="220.0" prefWidth="417.0" />
+      <Button layoutX="541.0" layoutY="253.0" mnemonicParsing="false" onAction="#irParaPontoDeOnibus" opacity="0.0" prefHeight="104.0" prefWidth="178.0" />
+      <Button layoutX="660.0" layoutY="468.0" mnemonicParsing="false" onAction="#irParaMapaPrincipal" scaleX="0.5" scaleY="0.5" styleClass="botao-estilizado-pequeno">
+         <graphic>
+            <ImageView fitHeight="150.0" fitWidth="200.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../imagens/BOTAORETORNO.png" />
+               </image>
+            </ImageView>
+         </graphic>
+      </Button>
+      <fx:include fx:id="meuHud" layoutX="-80.0" layoutY="440.0" scaleX="0.7" scaleY="0.7" source="HUD.fxml" />
+   </children>
+</Pane>

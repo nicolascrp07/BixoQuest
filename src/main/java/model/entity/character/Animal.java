@@ -1,8 +1,7 @@
 package main.java.model.entity.character;
 
-import main.java.model.entity.world.LEDS;
+import main.java.model.entity.world.AmbienteAula;
 import main.java.model.entity.world.Local;
-import main.java.model.entity.world.Sala;
 
 import java.util.ArrayList;
 
@@ -14,20 +13,26 @@ public class Animal extends Personagem {
         super(nome, local, dialogos);
     }
 
-    // Animais não podem acessar salas de aula nem o LEDS
+    // Animais não podem acessar ambientes de aula
     @Override
     public boolean podeAcessar(Local l) {
-        return !(l instanceof Sala) && !(l instanceof LEDS);
+        return !(l instanceof AmbienteAula);
     }
 
     // Aumenta a motivação do jogador ao fazer carinho no animal
     private void receberCarinho(Jogador jogador) {
-        jogador.setMotivacao(jogador.getMotivacao() + 10);
+        jogador.setMotivacao(jogador.getMotivacao() + 15);
     }
 
     // A interação específica do animal é receber carinho do jogador
     @Override
     public void interacaoEspecifica(Jogador jogador) {
         this.receberCarinho(jogador);
+    }
+
+    // Define se o animal se move aleatoriamente pelo mapa
+    @Override
+    public boolean seMoveAleatoriamente(){
+        return true;
     }
 }

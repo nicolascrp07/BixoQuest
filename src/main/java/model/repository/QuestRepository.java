@@ -1,5 +1,6 @@
 package main.java.model.repository;
 
+import main.java.model.entity.academic.Disciplina;
 import main.java.model.entity.event.Quest;
 import main.java.model.entity.event.QuestAtributo;
 import main.java.model.entity.event.QuestVisita;
@@ -28,15 +29,27 @@ public class QuestRepository {
         return new ArrayList<>(qb);
     }
 
+    // Busca uma quest pelo nome
+    public Quest buscarPorNome(String nome) {
+        for (Quest q : qb) {
+            if (q.getNome().equalsIgnoreCase(nome)) {
+                return q;
+            }
+        }
+        return null; // Nenhuma quest encontrada
+    }
+
     // Instancia e salva todas as quests possíveis do jogo
     public void criarQuestsPadrao(Universidade uni) {
+
+        if (!qb.isEmpty()) return;
 
         // Prepara recompensas padronizadas
         Recompensa recPequena = new Recompensa(10.0, 5, 5);
         Recompensa recMedia   = new Recompensa(25.0, 15, 10);
         Recompensa recGrande  = new Recompensa(50.0, 20, 20);
 
-        // Cria as Quests de Atributo (Podemos deixar a origem nula para quests globais)
+        // Cria as Quests de Atributo
         this.salvar(new QuestAtributo("Rato de Biblioteca", null, "De cara nos livros! Alcance 80 em conhecimento.", recGrande, QuestAtributo.CONHECIMENTO, 80));
         this.salvar(new QuestAtributo("Zen", null, "Mantenha sua energia no máximo (100) para encarar os desafios do curso.", recPequena, QuestAtributo.ENERGIA, 100));
         this.salvar(new QuestAtributo("Inabalável", null, "Não deixe a universidade te derrubar. Alcance 90 de motivação!", recMedia, QuestAtributo.MOTIVACAO, 90));

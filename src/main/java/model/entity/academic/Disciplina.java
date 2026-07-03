@@ -1,7 +1,6 @@
 package main.java.model.entity.academic;
 
 import main.java.model.entity.character.Professor;
-import java.util.ArrayList; // import não utilizado, pode ser removido
 
 // Disciplina cursada pelo jogador
 public class Disciplina {
@@ -70,4 +69,7 @@ public class Disciplina {
     public Professor getProfessor() {
         return professor;
     }
+
+    // Retorna a avaliação da disciplina
+    public Avaliacao getAvaliacao() { return this.avaliacao; }
 }

@@ -2,16 +2,18 @@ package main.java.model.service;
 
 import main.java.model.entity.academic.Disciplina;
 import main.java.model.entity.character.Jogador;
+import main.java.model.entity.character.Personagem;
 import main.java.model.entity.event.Evento;
 import main.java.model.entity.game.Partida;
 import main.java.model.entity.game.Tempo;
+import main.java.model.entity.world.Local;
 import main.java.model.entity.world.Universidade;
 import main.java.model.repository.*;
 
 import java.util.ArrayList;
 import java.util.UUID;
 
-// Service central da partida, responsável pelo fluxo principal do jogo
+// Service responsável por todas as regras de negócio da partida e dos demais services do sistema
 public class PartidaService {
 
     private AcademicoService academicoService;
@@ -24,10 +26,9 @@ public class PartidaService {
     private EventoRepository eventoRepo;
     private QuestRepository questRepo;
 
-    // Total de disciplinas necessárias para vencer o jogo
     public static final int TOTAL_DISCIPLINAS = 24;
 
-    // Constrói o service
+    // Recebe e mapeia todos os repositórios e services internos necessários
     public PartidaService(AcademicoService ac, ExplorarService es, EventoService ev, ProfessorRepository pr, DisciplinaRepository dr, UniversidadeRepository ur, PartidaRepository par, EventoRepository er, QuestRepository qr) {
         this.academicoService = ac;
         this.explorarService  = es;
@@ -40,29 +41,47 @@ public class PartidaService {
         this.questRepo        = qr;
     }
 
-    // Avança uma semana, reposiciona personagens, gera evento e, se virar semestre, fecha e rematricula
+    // Processa a mudança de turno, liberação de bloqueios e fechamento de semestre
     public void avancarSemana(Partida p) {
         int semestreAnterior = p.getTempo().getSemestreAtual();
         p.getTempo().avancarSemana();
-        explorarService.atualizarLocal(p.getUniversidade());
-        p.setEventoAtual(eventoService.gerarEvento(p.getEventos(), p.getTempo()));
 
+        // Reseta o status de bloqueio dos locais da universidade para o novo turno
+        for (Local l : p.getUniversidade().getLocais()) {
+            l.setInteragiu(false);
+        }
+
+        // Reseta o status de interação dos NPCs para permitir novas interações
+        for (Personagem ps : p.getUniversidade().getPersonagens()) {
+            ps.setInteragiu(false);
+        }
+
+        // Redistribui os NPC 's por toda a universidade
+        explorarService.atualizarLocal(p.getUniversidade());
+
+        // Identifica virada de semestre para processar aprovações e novas matrículas
         if (p.getTempo().getSemestreAtual() > semestreAnterior) {
             ArrayList<Disciplina> aprovadas = academicoService.fecharSemestre(p.getJogador());
             explorarService.atualizarSalas(aprovadas, p.getUniversidade(), p.getGradeCompleta());
             academicoService.matricularNovoSemestre(p.getJogador(), p.getGradeCompleta());
         }
 
+        // Aloca o jogador na posição padrão caso esteja em uma posição imprópria
+        if (p.getJogador().getLocalAtual() == null) {
+            p.getJogador().setLocalAtual(p.getUniversidade().getLocais().getFirst());
+        }
+
+        // Persiste o progresso da partida
         partRepo.salvarPartida(p);
     }
 
-    // Retorna true se o jogador concluiu todas as disciplinas da grade
+    // Retorna true se a hsitórico do jogador atingir o total de disciplinas da grade
     public boolean verificarFimDeJogo(Jogador j) {
         return j.getHistoricoAprovadas().size() == TOTAL_DISCIPLINAS;
     }
 
-    // Inicializa todos os dados do jogo e retorna uma nova partida
-    public Partida iniciarJogo(String nomeJogador) {
+    // Popula o mundo inicial, cadastra estruturas bases e retorna uma nova instância de partida
+    public Partida iniciarJogo(String nomeJogador, String caminhoAvatar, String caminhoIconeAvatar) {
         profRepo.criarProfessores();
         discRepo.criarGrade(profRepo.buscarTodos());
         uniRepo.criarMundo(discRepo.buscarTodas());
@@ -73,8 +92,11 @@ public class PartidaService {
         ArrayList<Evento> eventos     = eventoRepo.buscarTodos();
         questRepo.criarQuestsPadrao(uni);
 
-        // Cria o jogador com os atributos iniciais e o posiciona na universidade
-        Jogador jogador = new Jogador(nomeJogador, 100, 0, 100, 100, 50.0, 0.0, uni);
+        Jogador jogador = new Jogador(nomeJogador, 100, 0, 50, 100, 50.0, 0.0, uni.getLocais().getFirst());
+
+        jogador.setCaminhoAvatar(caminhoAvatar);
+        jogador.setCaminhoIconeAvatar(caminhoIconeAvatar);
+
         academicoService.matricularNovoSemestre(jogador, grade);
 
         Tempo tempo     = new Tempo(1, 1);
@@ -84,6 +106,7 @@ public class PartidaService {
         return partida;
     }
 
+    // Recria as instâncias globais padronizadas e devolve a lista de saves em disco
     public ArrayList<Partida> carregarJogo() {
         profRepo.criarProfessores();
         discRepo.criarGrade(profRepo.buscarTodos());
@@ -94,13 +117,13 @@ public class PartidaService {
         return partRepo.buscarJogosSalvos(uni);
     }
 
-    // Retorna true se o jogador ficou sem saúde ou sem motivação
+    // Avalia o esgotamento fatal de atributos
     public boolean verificarGameOver(Jogador j) {
         return j.getSaude() == 0 || j.getMotivacao() == 0;
     }
 
+    // Apaga definitivamente os dados persistidos da partida
     public void deletarJogoFinalizado(Partida partida) {
         partRepo.deletarSave(partida);
     }
-
 }

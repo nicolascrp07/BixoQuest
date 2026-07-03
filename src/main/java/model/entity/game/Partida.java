@@ -41,7 +41,7 @@ public class Partida {
     public Universidade getUniversidade() { return universidade; }
 
     // Retorna a grade
-    public ArrayList<Disciplina> getGradeCompleta() { return gradeCompleta; }
+    public ArrayList<Disciplina> getGradeCompleta() { return new ArrayList<>(this.gradeCompleta); }
 
     // Retorna se a partida foi encerrada
     public boolean isJogoEncerrado() { return jogoEncerrado; }
@@ -56,7 +56,7 @@ public class Partida {
     public Evento getEventoAtual() { return eventoAtual; }
 
     // Retorna todos os eventos
-    public ArrayList<Evento> getEventos() { return eventos; }
+    public ArrayList<Evento> getEventos() { return new ArrayList<>(this.eventos); }
 
     // Retorna a identificação do arquivo na persistência
     public UUID getId (){ return id; }

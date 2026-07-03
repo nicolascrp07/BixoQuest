@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.StackPane?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
+
+<StackPane prefHeight="600.0" prefWidth="800.0" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="main.java.view.controller.MinigameController">
+    <children>
+
+        <ImageView fx:id="imagemDeFundo" fitHeight="600.0" fitWidth="800.0" pickOnBounds="true" preserveRatio="false" />
+
+        <VBox alignment="CENTER" prefHeight="600.0" prefWidth="800.0" spacing="40.0" style="-fx-background-color: rgba(0, 0, 0, 0.7);">
+            <children>
+
+                <Label fx:id="labelMateria" text="PROVA DE MATÉRIA" textFill="#f2c438">
+                    <font>
+                        <Font name="System Bold" size="32.0" />
+                    </font>
+                </Label>
+
+                <Label fx:id="labelPergunta" text="Enunciado da questão aparecerá aqui..." textAlignment="CENTER" textFill="WHITE" wrapText="true">
+                    <font>
+                        <Font name="System Bold" size="22.0" />
+                    </font>
+                    <VBox.margin>
+                        <Insets left="60.0" right="60.0" />
+                    </VBox.margin>
+                </Label>
+
+                <VBox fx:id="caixaAlternativas" alignment="CENTER" spacing="15.0">
+                    <VBox.margin>
+                        <Insets left="150.0" right="150.0" />
+                    </VBox.margin>
+                </VBox>
+
+            </children>
+        </VBox>
+
+    </children>
+</StackPane>

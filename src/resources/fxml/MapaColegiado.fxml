@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.Pane?>
+<?import javafx.scene.text.Font?>
+
+<Pane prefHeight="600.0" prefWidth="800.0" stylesheets="@../css/geral.css" xmlns="http://javafx.com/javafx/26" xmlns:fx="http://javafx.com/fxml/1" fx:controller="main.java.view.controller.ColegiadoController">
+   <children>
+      <ImageView fitHeight="600.0" fitWidth="800.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@../imagens/COLEGIADO.jpeg" />
+         </image>
+      </ImageView>
+      <fx:include fx:id="botaoNpcComponente" layoutX="-130.0" layoutY="200.0" scaleX="0.7" scaleY="0.7" source="BotaoNPC.fxml" />
+      <fx:include fx:id="meuHud" layoutX="-80.0" layoutY="440.0" scaleX="0.7" scaleY="0.7" source="HUD.fxml" />
+      <Button layoutX="660.0" layoutY="467.0" mnemonicParsing="false" onAction="#botaoSairDoColegiadoClicado" scaleX="0.5" scaleY="0.5" styleClass="botao-estilizado-pequeno">
+         <graphic>
+            <ImageView fitHeight="150.0" fitWidth="200.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../imagens/BOTAORETORNO.png" />
+               </image>
+            </ImageView>
+         </graphic>
+      </Button>
+      <Button contentDisplay="CENTER" layoutX="14.0" layoutY="14.0" mnemonicParsing="false" onAction="#botaoPedirAjudaClicado" styleClass="botao-estilizado" text="PEDIR AJUDA À MAELI" textFill="#591313">
+         <graphic>
+            <ImageView fitHeight="150.0" fitWidth="200.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../imagens/BOTAO.png" />
+               </image>
+            </ImageView>
+         </graphic>
+         <font>
+            <Font name="Verdana Bold" size="11.0" />
+         </font>
+      </Button>
+   </children>
+</Pane>

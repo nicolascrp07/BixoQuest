@@ -10,17 +10,15 @@ public class Consequencia {
     private double efeitoDinheiro;      // Efeito no saldo do jogador
     private int efeitoConhecimento;     // Efeito no nível de conhecimento do jogador
     private int efeitoSaude;            // Efeito na saúde do jogador
-    private int efeitoAcademico;        // Efeito no desempenho acadêmico do jogador
 
     // Constrói a consequência
     public Consequencia(int efeitoEnergia, int efeitoMotivacao, double efeitoDinheiro,
-                        int efeitoConhecimento, int efeitoSaude, int efeitoAcademico) {
+                        int efeitoConhecimento, int efeitoSaude) {
         this.efeitoEnergia = efeitoEnergia;
         this.efeitoMotivacao = efeitoMotivacao;
         this.efeitoDinheiro = efeitoDinheiro;
         this.efeitoConhecimento = efeitoConhecimento;
         this.efeitoSaude = efeitoSaude;
-        this.efeitoAcademico = efeitoAcademico;
     }
 
     // Aplica todos os efeitos desta consequência sobre o jogador
@@ -30,6 +28,5 @@ public class Consequencia {
         jogador.setDinheiro(jogador.getDinheiro() + efeitoDinheiro);
         jogador.setNivelConhecimento(jogador.getNivelConhecimento() + efeitoConhecimento);
         jogador.setSaude(jogador.getSaude() + efeitoSaude);
-        jogador.setDesempenhoAcademico(jogador.getDesempenhoAcademico() + efeitoAcademico);
     }
 }

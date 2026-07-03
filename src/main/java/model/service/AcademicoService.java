@@ -3,12 +3,10 @@ package main.java.model.service;
 import main.java.model.entity.academic.Avaliacao;
 import main.java.model.entity.academic.Disciplina;
 import main.java.model.entity.character.Jogador;
-import main.java.model.entity.character.Professor;
 import main.java.model.entity.event.Consequencia;
-import main.java.model.entity.world.LEDS;
-import main.java.model.entity.world.Local;
-import main.java.model.entity.world.Sala;
-import main.java.model.entity.world.Universidade;
+import main.java.model.strategy.*;
+import java.util.HashMap;
+import java.util.Map;
 
 import java.util.ArrayList;
 
@@ -16,23 +14,41 @@ import java.util.ArrayList;
 public class AcademicoService {
 
     // Impactos predefinidos aplicados ao jogador conforme a dificuldade da avaliação
-    private static final Consequencia IMPACTO_DIFICIL = new Consequencia(-15, -10, 0, 0, -15, 0);
-    private static final Consequencia IMPACTO_MEDIO   = new Consequencia(-10, -5,  0, 0, -5,  0);
-    private static final Consequencia IMPACTO_FACIL   = new Consequencia(-5,  0,   0, 10, 0,   1);
+    private static final Consequencia IMPACTO_DIFICIL = new Consequencia(-15, -10, 0, 20, -15);
+    private static final Consequencia IMPACTO_MEDIO   = new Consequencia(-10, -5,  0, 0, -5);
+    private static final Consequencia IMPACTO_FACIL   = new Consequencia(-5,  0,   0, 10, 0);
 
     // Constantes que identificam as áreas das disciplinas
     public static final String EXATAS     = "exatas";
     public static final String ALGORITMOS = "algoritmos";
     public static final String HARDWARE   = "hardware";
 
-    // Calcula a dificuldade, aplica o impacto correspondente e registra a nota obtida no minigame
-    public void aplicarProva(Jogador j, Disciplina d, Avaliacao a, double notaDoMinigame) {
+    // Mapa que associa cada área à sua respectiva estratégia de avaliação (STRATEGY)
+    private Map<String, EstrategiaAvaliacao> motorDeProvas;
+
+    public AcademicoService() {
+        motorDeProvas = new HashMap<>();
+        motorDeProvas.put(EXATAS, new ProvaExatasStrategy());
+        motorDeProvas.put(ALGORITMOS, new ProvaAlgoritmosStrategy());
+        motorDeProvas.put(HARDWARE, new ProvaHardwareStrategy());
+    }
+
+    // Calcula a dificuldade da avaliação, aplica o desgaste correspondente no jogador e delega o cálculo da nota à estratégia da área da disciplina
+    public void aplicarProva(Jogador j, Disciplina d, int acertos, int totalPerguntas) {
+        Avaliacao a = d.getAvaliacao();
+
         this.calcularDificuldade(j, a);
+
         if (a.getDificuldade() == 3)      IMPACTO_DIFICIL.aplicar(j);
         else if (a.getDificuldade() == 2) IMPACTO_MEDIO.aplicar(j);
         else                              IMPACTO_FACIL.aplicar(j);
-        a.setNota(notaDoMinigame);
-        d.setNotaFinal(a.getNota());
+
+        // Seleciona a estratégia da área da disciplina e calcula a nota cruzando o desempenho no minigame com os atributos do jogador
+        EstrategiaAvaliacao estrategia = motorDeProvas.get(d.getArea());
+        double notaFinal = estrategia.calcularNota(acertos, totalPerguntas, j, a.getDificuldade());
+
+        a.setNota(notaFinal);
+        d.setNotaFinal(notaFinal);
     }
 
     // Define a dificuldade da avaliação com base no nível de conhecimento atual do jogador

@@ -18,10 +18,11 @@ public class QuestVisita extends Quest {
     // Verifica se o jogador está no local de destino | Retorna falso se o local atual for nulo
     @Override
     public boolean checarProgresso(Jogador jogador) {
-        if (jogador.getLocalAtual() == null) {
+        if (jogador.getLocalAtual() == null || localDestino == null) {
             return false;
         }
-        return jogador.getLocalAtual().equals(localDestino);
+
+        return jogador.getLocalAtual().getNome().equalsIgnoreCase(localDestino.getNome());
     }
 
     // Retorna o local que o jogador precisa visitar

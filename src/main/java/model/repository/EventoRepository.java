@@ -25,6 +25,9 @@ public class EventoRepository {
 
     // Instancia e salva todos os eventos do jogo
     public void criarEventosPadrao() {
+
+        if (!eb.isEmpty()) return;
+
         this.salvar(new ProvaSurpresa());
         this.salvar(new FilaGigante());
         this.salvar(new Greve());

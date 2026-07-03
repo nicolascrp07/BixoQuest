@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.ProgressBar?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.Pane?>
+<?import javafx.scene.text.Font?>
+
+<Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="172.0" prefWidth="774.0" stylesheets="@../css/geral.css" xmlns="http://javafx.com/javafx/26" xmlns:fx="http://javafx.com/fxml/1" fx:controller="main.java.view.controller.HUDController">
+   <children>
+      <ImageView fitHeight="200.0" fitWidth="600.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@../imagens/HUD.png" />
+         </image>
+      </ImageView>
+      <ProgressBar fx:id="barraMotivacao" layoutX="155.0" layoutY="64.0" prefHeight="18.0" prefWidth="155.0" progress="0.0" />
+      <ProgressBar fx:id="barraSaude" layoutX="155.0" layoutY="33.0" prefHeight="18.0" prefWidth="155.0" progress="0.0" />
+      <ProgressBar fx:id="barraEnergia" layoutX="155.0" layoutY="95.0" prefHeight="18.0" prefWidth="155.0" progress="0.0" />
+      <ProgressBar fx:id="barraConhecimento" layoutX="155.0" layoutY="127.0" prefHeight="18.0" prefWidth="155.0" progress="0.0" />
+      <Label fx:id="labelDinheiro" alignment="CENTER" contentDisplay="CENTER" layoutX="392.0" layoutY="25.0" prefHeight="32.0" prefWidth="66.0" text="-" textFill="WHITE">
+         <font>
+            <Font name="Verdana Bold" size="12.0" />
+         </font></Label>
+      <Label fx:id="labelDesempenho" alignment="CENTER" contentDisplay="CENTER" layoutX="392.0" layoutY="66.0" prefHeight="32.0" prefWidth="66.0" text="-" textFill="#fffafa">
+         <font>
+            <Font name="Verdana Bold" size="12.0" />
+         </font></Label>
+      <Label fx:id="labelMaterias" alignment="CENTER" contentDisplay="CENTER" layoutX="510.0" layoutY="25.0" prefHeight="32.0" prefWidth="66.0" text="-" textFill="WHITE" />
+      <Label fx:id="labelSemana" alignment="CENTER" contentDisplay="CENTER" layoutX="510.0" layoutY="66.0" prefHeight="32.0" prefWidth="66.0" text="-" textFill="WHITE" />
+      <Label fx:id="labelSemestre" alignment="CENTER" contentDisplay="CENTER" layoutX="392.0" layoutY="111.0" prefHeight="32.0" prefWidth="66.0" text="-" textFill="WHITE">
+         <font>
+            <Font name="Verdana Bold" size="12.0" />
+         </font></Label>
+      <ImageView fx:id="imagePersonagem" fitHeight="72.0" fitWidth="72.0" layoutX="31.0" layoutY="40.0" pickOnBounds="true" preserveRatio="true" />
+      <Button layoutX="594.0" mnemonicParsing="false" onAction="#botaoVerQuestClicado" scaleX="0.8" scaleY="0.8" styleClass="botao-estilizado">
+         <graphic>
+            <ImageView fitHeight="150.0" fitWidth="200.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../imagens/BOTAOQUEST.png" />
+               </image>
+            </ImageView>
+         </graphic>
+      </Button>
+      <Label fx:id="labelMotivacaoNum" alignment="CENTER_RIGHT" contentDisplay="CENTER" layoutX="232.0" layoutY="64.0" prefHeight="18.0" prefWidth="78.0">
+         <font>
+            <Font name="Courier New Bold" size="12.0" />
+         </font>
+      </Label>
+      <Label fx:id="labelSaudeNum" alignment="CENTER_RIGHT" contentDisplay="CENTER" layoutX="232.0" layoutY="33.0" prefHeight="18.0" prefWidth="78.0">
+         <font>
+            <Font name="Courier New Bold" size="12.0" />
+         </font>
+      </Label>
+      <Label fx:id="labelEnergiaNum" alignment="CENTER_RIGHT" contentDisplay="CENTER" layoutX="232.0" layoutY="95.0" prefHeight="18.0" prefWidth="78.0">
+         <font>
+            <Font name="Courier New Bold" size="12.0" />
+         </font>
+      </Label>
+      <Label fx:id="labelConhecimentoNum" alignment="CENTER_RIGHT" contentDisplay="CENTER" layoutX="232.0" layoutY="127.0" prefHeight="18.0" prefWidth="78.0">
+         <font>
+            <Font name="Courier New Bold" size="12.0" />
+         </font>
+      </Label>
+      <Label fx:id="labelMateriasAprovadas" alignment="CENTER" contentDisplay="CENTER" layoutX="510.0" layoutY="111.0" prefHeight="32.0" prefWidth="66.0" text="-" textFill="WHITE" />
+      <ImageView fitHeight="32.0" fitWidth="32.0" layoutX="470.0" layoutY="111.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@../imagens/SIMBOLODISCIPLINASAPROVADAS.png" />
+         </image>
+      </ImageView>
+   </children>
+</Pane>

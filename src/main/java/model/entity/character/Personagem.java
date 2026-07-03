@@ -1,7 +1,5 @@
 package main.java.model.entity.character;
 
-import main.java.model.entity.event.Quest;
-import main.java.model.entity.event.Recompensa; // import não utilizado, pode ser removido
 import main.java.model.entity.world.Local;
 import java.util.ArrayList;
 
@@ -11,12 +9,14 @@ public abstract class Personagem {
     protected String nome;                          // Nome do personagem
     protected Local local;                          // Local onde o personagem se encontra
     protected ArrayList<String> dialogos;
+    protected boolean interagiu;
 
     // Constrói o personagem
     public Personagem(String nome, Local local, ArrayList<String> dialogos) {
         this.nome = nome;
         this.local = local;
         this.dialogos = dialogos;
+        this.interagiu = false;
     }
 
     // Atualiza o local do personagem
@@ -39,4 +39,13 @@ public abstract class Personagem {
 
     // Define o comportamento específico da interação com o jogador
     public abstract void interacaoEspecifica(Jogador jogador);
+
+    // Define o tipo de movimentação no mapa
+    public abstract boolean seMoveAleatoriamente();
+
+    // Define se o jogador já interagiu com o personagem na semana
+    public boolean isInteragiu() { return interagiu; }
+
+    // Atualiza a interação com o jogador
+    public void setInteragiu(boolean interagiu) { this.interagiu = interagiu; }
 }
